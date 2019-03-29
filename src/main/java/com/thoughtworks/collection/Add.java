@@ -1,7 +1,7 @@
 package com.thoughtworks.collection;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,26 +47,41 @@ public class Add {
     }
 
     public double getMedianOfEven(List<Integer> arrayList) {
-        throw new NotImplementedException();
+        List<Integer> list =  arrayList.stream().filter(item->item % 2 == 0).collect(Collectors.toList());
+        if(list.size() % 2 == 1) return list.get((list.size()-1)/2);
+        return (list.get((list.size()-1)/2) + list.get((list.size()-1)/2 + 1))/2;
     }
 
     public double getAverageOfEven(List<Integer> arrayList) {
-        throw new NotImplementedException();
+        List<Integer> evenList= arrayList.stream().filter(item->item % 2 == 0).collect(Collectors.toList());
+        int sum = evenList.stream().reduce(0,(result,item)->result+item);
+        return sum / evenList.size();
     }
 
     public boolean isIncludedInEvenIndex(List<Integer> arrayList, Integer specialElment) {
-        throw new NotImplementedException();
+        List<Integer> evenList= arrayList.stream().filter(item->item % 2 == 0).collect(Collectors.toList());
+        return evenList.contains(specialElment);
     }
 
     public List<Integer> getUnrepeatedFromEvenIndex(List<Integer> arrayList) {
-        throw new NotImplementedException();
+        return arrayList.stream().filter(item->item % 2 == 0).distinct().collect(Collectors.toList());
+
     }
 
     public List<Integer> sortByEvenAndOdd(List<Integer> arrayList) {
-        throw new NotImplementedException();
+        List<Integer> list= arrayList.stream().filter(item->item % 2 == 0).sorted().collect(Collectors.toList());
+        List<Integer> oddList= arrayList.stream().filter(item->item % 2 == 1).sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+        list.addAll(oddList);
+        return list;
+
     }
 
     public List<Integer> getProcessedList(List<Integer> arrayList) {
-        throw new NotImplementedException();
+        List<Integer> list = new LinkedList<>();
+        for (int i = 0; i < arrayList.size()-1; i++) {
+            list.add((arrayList.get(i)+arrayList.get(i+1))*3);
+        }
+        return list;
     }
 }
